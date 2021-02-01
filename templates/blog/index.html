@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+
+{% block bootstrap4_title %}{% block title %}{% endblock %}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Writer</th>
+                <th scope="col">Total Articles Written</th>
+                <th scope="col">Total Articles Written Last 30 days</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for writer in writers %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ writer.name }}</td>
+                    <td>{{ writer.total_articles }}</td>
+                    <td>{{ writer.total_30 }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+
+{% block bootstrap4_title %}Create Article{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <form method="post">{% csrf_token %}
+            {% bootstrap_form form layout='horizontal' %}
+            <div class="col text-center">
+                {% buttons submit='SAVE' %}{% endbuttons %}
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

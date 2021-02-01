@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+
+{% block bootstrap4_title %}My articles{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Created at</th>
+                <th scope="col">Edited by</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for article in articles %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ article.title }}</td>
+                    <td>{{ article.created_at }}</td>
+                    <td>{% if article.edited_by %}{{ article.edited_by }}{% endif %}</td>
+                    <td>
+                        <div class="col-md-9">
+                            <div class="btn-group btn-group-toggle"
+                                 data-toggle="buttons" id="status">
+                                <label class="btn btn-outline-primary{% if article.status == 'DRA' %} active
+                                    {% endif %}" id="id_category5">
+                                    <input id="{{ article.id }}" name="status" required="" type="radio"
+                                           value="DRA"> Draft
+                                </label>
+                                <label class="btn btn-outline-primary{% if article.status == 'APP' %} active
+                                    {% endif %}" id="id_category5">
+                                    <input id="{{ article.id }}" name="status" required="" type="radio"
+                                           value="APP">Approved
+                                </label>
+                                <label class="btn btn-outline-primary{% if article.status == 'REJ' %} active
+                                    {% endif %}" id="id_category5">
+                                    <input id="{{ article.id }}" name="status" required="" type="radio"
+                                           value="REJ">Rejected
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+
+{% block extra_js %}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $('#status input:radio').click(function () {
+          let new_status = $(this).val();
+          let article_id = $(this).attr('id');
+          $.ajax({
+            type: "POST",
+            url: "{%  url 'update-status' %}",
+            data: {new_status: new_status, article_id: article_id},
+            dataType: "json",
+            success: function (response, status) {
+              // console.log(response, status);
+              alert(response.result)
+            },
+            error: function (jqXHR, textStatus, ex) {
+              console.log(jqXHR, textStatus, ex);
+            }
+          })
+        });
+      });
+    </script>
+{% endblock %}

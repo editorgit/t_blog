@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+
+{% block bootstrap4_title %}My articles{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Created at</th>
+                <th scope="col">Edited by</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for article in object_list %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ article.title }}</td>
+                    <td>{{ article.created_at }}</td>
+                    <td>{% if article.edited_by %}{{ article.edited_by }}{% endif %}</td>
+                    <td>{{ article.get_status_display }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
