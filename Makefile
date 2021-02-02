@@ -1,8 +1,3 @@
-hello:
-	echo "hello world"
-
-.PHONY: help build push all
-
 help:
 	@echo "Makefile commands:"
 	@echo "build"
