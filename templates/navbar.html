@@ -14,10 +14,10 @@
                         <a class="nav-link {% if url_name == 'index' %}active{% endif %}" aria-current="page"
                            href="{% url 'index' %}">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if url_name == 'article-writer-list' %}active{% endif %}"
-                           href="{% url 'article-writer-list' request.user.writer.pk %}">My articles</a>
-                    </li>
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link {% if url_name == 'article-writer-list' %}active{% endif %}"#}
+{#                           href="{% url 'article-writer-list' request.user.writer.pk %}">My articles</a>#}
+{#                    </li>#}
 
                     <li class="nav-item">
                         <a class="nav-link {% if url_name == 'article-new' %}active{% endif %}"

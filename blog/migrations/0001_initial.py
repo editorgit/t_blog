@@ -17,22 +17,39 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Writer',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True,
+                                        serialize=False,
+                                        verbose_name='ID')),
                 ('name', models.CharField(max_length=35)),
                 ('is_editor', models.BooleanField(default=False)),
-                ('user', models.OneToOneField(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(
+                    null=True, on_delete=django.db.models.deletion.SET_NULL,
+                    to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
             name='Article',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True,
+                                        serialize=False,
+                                        verbose_name='ID')),
                 ('title', models.CharField(max_length=100)),
-                ('content', models.CharField(blank=True, max_length=100, null=True)),
-                ('status', models.CharField(choices=[('DRA', 'Draft'), ('APP', 'Approved'), ('REJ', 'Rejected')], default='DRA', max_length=3)),
+                ('content', models.CharField(blank=True,
+                                             max_length=100,
+                                             null=True)),
+                ('status', models.CharField(choices=[
+                 ('DRA', 'Draft'), ('APP', 'Approved'), ('REJ', 'Rejected')],
+                    default='DRA', max_length=3)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('edited_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='edited_by', to='blog.writer')),
-                ('written_by', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='written_by', to='blog.writer')),
+                ('edited_by', models.ForeignKey(
+                    blank=True, null=True,
+                    on_delete=django.db.models.deletion.SET_NULL,
+                    related_name='edited_by', to='blog.writer')),
+                ('written_by', models.ForeignKey(
+                    null=True, on_delete=django.db.models.deletion.SET_NULL,
+                    related_name='written_by', to='blog.writer')),
             ],
         ),
     ]

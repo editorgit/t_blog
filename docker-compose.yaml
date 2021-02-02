@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+
+  postgres:
+    container_name: postgres
+    image: postgres:11-alpine
+    volumes:
+      - db-data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+
+  redis:
+    image: redis
+    container_name: redis
+
+  app:
+    build: .
+    container_name: blogapp
+    command: python manage.py runserver 0.0.0.0:8888
+    restart: always
+    ports:
+      - "8888:8888"
+    volumes:
+      - media:/var/www/var/media
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      DJANGO_SETTINGS_MODULE: app.settings
+
+networks:
+  default:
+    external: false
+
+volumes:
+ media:
+ db-data:

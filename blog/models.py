@@ -1,6 +1,4 @@
-from datetime import date, timedelta
-
-from django.conf import settings
+from django.contrib.auth.models import User
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -11,7 +9,8 @@ user_model = get_user_model()
 class Writer(models.Model):
     name = models.CharField(max_length=35)
     is_editor = models.BooleanField(default=False)
-    user = models.OneToOneField(user_model, on_delete=models.SET_NULL, null=True)
+    user = models.OneToOneField(
+        User, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.name
@@ -35,20 +34,15 @@ class Article(models.Model):
         choices=STATUS_CHOICES,
         default=DRAFT,
     )
-    created_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
     written_by = models.ForeignKey(Writer, related_name='written_by',
                                    on_delete=models.SET_NULL, null=True)
     edited_by = models.ForeignKey(Writer, related_name='edited_by',
-                                  on_delete=models.SET_NULL, blank=True, null=True)
+                                  on_delete=models.SET_NULL,
+                                  blank=True, null=True)
 
     def __str__(self):
         return f"{self.title}: {self.status}"
 
     def get_absolute_url(self):
         return reverse('article-detail', kwargs={'pk': self.pk})
-
-    @property
-    def is_last_days(self) -> bool:
-        days_ago = date.today() - timedelta(days=settings.LAST_DAYS)
-        return True if self.created_at > days_ago else False
-
