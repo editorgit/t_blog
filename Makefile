@@ -10,8 +10,8 @@ help:
 
 
 build:
-	docker-compose build --no-cache
-	docker-compose run -d
+	docker-compose build
+	docker-compose up -d
 
 up:
 	docker-compose up -d
@@ -20,13 +20,13 @@ ssh:
 	docker exec -it blogapp bash
 
 server:
-	python manage.py runserver
+	docker exec -it blogapp python manage.py runserver
 
 down:
 	docker stop blogapp
 
 flake8:
-	flake8
+	docker exec -it blogapp flake8
 
 test:
-	python manage.py test
+	docker exec -it blogapp python manage.py test
